@@ -24,7 +24,8 @@ This is a backend API build in Nodejs for testing authentication. It exposes a R
 
 ## Database diagram
 
-![Database Diagram](https://user-images.githubusercontent.com/83477647/165020178-20807a29-de77-4275-bff4-880a3590d6bc.png)
+![Database Diagram](https://user-images.githubusercontent.com/83477647/165440813-a58853ab-b960-4c14-b1b0-50fc733af72b.png)
+
 
 
 ## Project build depended on
