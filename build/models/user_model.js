@@ -87,8 +87,9 @@ class userModel {
                 // connect to db
                 const connection = yield database_1.default.connect();
                 const sql = `UPDATE users 
-        SET email=$1 , user_name=$2 ,first_name=$3 ,last_name=$4 , password=$5  where id=$6
-        RETURNING id,email , user_name ,first_name ,last_name`;
+        SET email = ($1) , user_name = ($2) , first_name = ($3) , last_name = ($4) , password = ($5)  where id = ($6)
+        RETURNING id, email, user_name, first_name, last_name;`;
+                console.log(u);
                 // run query 
                 const data = yield connection.query(sql, [
                     u.email, u.user_name, u.first_name, u.last_name, hashPassword(u.password), u.id
@@ -96,6 +97,7 @@ class userModel {
                 // release connection
                 connection.release();
                 // return updated user
+                console.log(data.rows, 'dataaa');
                 return data.rows[0];
             }
             catch (error) {

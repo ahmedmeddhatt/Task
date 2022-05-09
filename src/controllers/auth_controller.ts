@@ -7,7 +7,6 @@ import UserModel from "../models/user_model";
 const user = new UserModel()
 
 
-
 //AUTHENTICATION
 export const authentication = async (req:Request, res:Response , next:NextFunction)=>{
     try {

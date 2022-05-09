@@ -1,5 +1,6 @@
 import { Request ,Response, NextFunction } from "express";
 import UserModel from "../models/user_model";
+import User from "../types/user_type";
 
 const user = new UserModel()
 
@@ -22,6 +23,10 @@ const getMany = async (req:Request, res:Response , next:NextFunction)=>{
 const getOne = async (req:Request, res:Response , next:NextFunction)=>{
         try {
             const data = await user.getOne(req.params.id as string); // as unknown
+            if(!data){
+                return res.status(404).json({ status: 'failed' , message:`User Not Found`})
+            }
+
             res.status(200).json({ status: 'success' , data , message:`User Reviewed successfully`})
             
         } catch (error) {
@@ -45,7 +50,18 @@ const Create = async (req:Request, res:Response , next:NextFunction)=>{
 //UPDATE
 const updateOne = async (req:Request, res:Response , next:NextFunction)=>{
         try {
-            const data = await user.updateOne(req.body); 
+            const input: User = {
+                id: req.params.id,
+                email: req.body.email,
+                user_name: req.body.user_name,
+                first_name: req.body.first_name,
+                last_name: req.body.last_name,
+                password: req.body.password
+            };
+            const data = await user.updateOne(input); 
+            if(!data){
+                return res.status(404).json({ status: 'failed' , message:`User Not Found`})
+            }
             res.status(201).json({ status: 'success' , data , message:`User Updated successfully`})
             
         } catch (error) {
@@ -59,7 +75,10 @@ const updateOne = async (req:Request, res:Response , next:NextFunction)=>{
 //DELETE
 const deleteOne = async (req:Request, res:Response , next:NextFunction)=>{
         try {
-             await user.deleteOne(req.params.id as string); // as unknown
+             const data = await user.deleteOne(req.params.id as string); // as unknown
+             if(!data){
+                return res.status(404).json({ status: 'failed' , message:`User Not Found`})
+            }
             res.status(200).json({ status: 'success' , message:`User Deleted successfully`})
             
         } catch (error) {
